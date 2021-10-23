@@ -19,16 +19,18 @@ int main() {
 
 	SDL_Texture *bitmap = SDL_CreateTextureFromSurface(R, SDL_LoadBMP("assets/Icon.1_24.bmp"));
 
-	// limpa a tela e aguarda
-	limpaTela(R);
+	//	limpa a tela e aguarda
 
-	SDL_RenderCopy(R, bitmap, NULL, NULL);
-	SDL_RenderPresent(R);
-
-//	SDL_Delay(5000);
+	//	SDL_Delay(5000);
+	SDL_Event E;
 	SDL_bool rodar = SDL_TRUE;
 	while(rodar) {
-		SDL_Event E;
+
+		SDL_RenderClear(R);
+		SDL_RenderCopy(R, bitmap, NULL, NULL);
+		SDL_RenderPresent(R);
+		SDL_Delay(1000/60);
+
 		while(SDL_PollEvent(&E)){
 			switch(E.type) {
 				case SDL_QUIT: rodar = SDL_FALSE; break;
