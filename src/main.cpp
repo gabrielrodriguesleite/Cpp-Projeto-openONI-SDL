@@ -18,11 +18,6 @@ int main() {
 	SDL_Renderer *R	=	novoRender(J);
 
 	// limpa a tela e aguarda
-//	SDL_SetRenderDrawColor(R, 128, 128, 128, 255);
-//	SDL_RenderClear(R);
-//	SDL_RenderPresent(R);
-	SDL_Color cinza = SDL_Color{128, 128, 255, 255};
-//	limpaTela(R, cinza);
 	limpaTela(R);
 	SDL_Delay(5000);
 
@@ -62,8 +57,9 @@ void limpaTela(SDL_Renderer* R, SDL_Color cor) {
 
 
 
-
-
+// http://wiki.libsdl.org/SDL_CreateRenderer
+// https://dotnettutorials.net/lesson/references/
+// https://www.programiz.com/cpp-programming/default-argument
 
 
 
