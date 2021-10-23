@@ -2,10 +2,12 @@
 
 // ↓ deve ser movido para outro arquivo
 #include <SDL2/SDL.h>
+// http://wiki.libsdl.org/CategoryAPI
 
 void iniciaSDL();
 SDL_Window* novaJanela();
 SDL_Renderer* novoRender(SDL_Window* janela);
+void limpaTela(SDL_Renderer* R, SDL_Color cor);
 
 int main() {
 	printf("Olá mundo!\n");
@@ -14,9 +16,16 @@ int main() {
 	iniciaSDL();
 	SDL_Window *J 	= novaJanela();
 	SDL_Renderer *R	=	novoRender(J);
-	SDL_Delay(2000);
 
+	// limpa a tela e aguarda
+	SDL_SetRenderDrawColor(R, 128, 128, 128, 255);
+	SDL_RenderClear(R);
+	SDL_RenderPresent(R);
+	SDL_Delay(5000);
 
+	SDL_DestroyRenderer(R);
+	SDL_DestroyWindow(J);
+	SDL_Quit();
 	return 0;
 }
 
@@ -38,7 +47,9 @@ SDL_Renderer* novoRender(SDL_Window* janela) {
 	return SDL_CreateRenderer(janela, -1, SDL_RENDERER_ACCELERATED);
 }
 
+void limpaTela(SDL_Renderer* R, SDL_Color cor) {
 
+}
 
 
 
