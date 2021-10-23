@@ -5,6 +5,7 @@
 
 void iniciaSDL();
 SDL_Window* novaJanela();
+SDL_Renderer* novoRender(SDL_Window* janela);
 
 int main() {
 	printf("Olá mundo!\n");
@@ -12,7 +13,8 @@ int main() {
 
 	iniciaSDL();
 	SDL_Window *J 	= novaJanela();
-	SDL_Renderer *R	=	NULL;
+	SDL_Renderer *R	=	novoRender(J);
+	SDL_Delay(2000);
 
 
 	return 0;
@@ -28,3 +30,53 @@ SDL_Window* novaJanela() {
 	return SDL_CreateWindow( "Janela", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		640,480, SDL_WINDOW_SHOWN);
 }
+
+SDL_Renderer* novoRender(SDL_Window* janela) {
+	if(janela == NULL) {
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "ERROR: SDL2 couldn't create window: %s", SDL_GetError());
+	}
+	return SDL_CreateRenderer(janela, -1, SDL_RENDERER_ACCELERATED);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
