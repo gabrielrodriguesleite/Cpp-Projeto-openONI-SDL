@@ -18,9 +18,11 @@ int main() {
 	SDL_Renderer *R	=	novoRender(J);
 
 	// limpa a tela e aguarda
-	SDL_SetRenderDrawColor(R, 128, 128, 128, 255);
-	SDL_RenderClear(R);
-	SDL_RenderPresent(R);
+//	SDL_SetRenderDrawColor(R, 128, 128, 128, 255);
+//	SDL_RenderClear(R);
+//	SDL_RenderPresent(R);
+	SDL_Color cinza = SDL_Color{128, 128, 255, 255};
+	limpaTela(R, cinza);
 	SDL_Delay(5000);
 
 	SDL_DestroyRenderer(R);
@@ -48,7 +50,9 @@ SDL_Renderer* novoRender(SDL_Window* janela) {
 }
 
 void limpaTela(SDL_Renderer* R, SDL_Color cor) {
-
+	SDL_SetRenderDrawColor(R, cor.r, cor.g, cor.b, 255);
+	SDL_RenderClear(R);
+	SDL_RenderPresent(R);
 }
 
 
