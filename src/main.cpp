@@ -7,7 +7,7 @@
 void iniciaSDL();
 SDL_Window* novaJanela();
 SDL_Renderer* novoRender(SDL_Window* janela);
-void limpaTela(SDL_Renderer* R, SDL_Color cor);
+void limpaTela(SDL_Renderer* R, SDL_Color cor = SDL_Color{128, 128, 128, 255});
 
 int main() {
 	printf("Olá mundo!\n");
@@ -22,7 +22,8 @@ int main() {
 //	SDL_RenderClear(R);
 //	SDL_RenderPresent(R);
 	SDL_Color cinza = SDL_Color{128, 128, 255, 255};
-	limpaTela(R, cinza);
+//	limpaTela(R, cinza);
+	limpaTela(R);
 	SDL_Delay(5000);
 
 	SDL_DestroyRenderer(R);
