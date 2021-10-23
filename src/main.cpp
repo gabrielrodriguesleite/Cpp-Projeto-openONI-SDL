@@ -17,8 +17,14 @@ int main() {
 	SDL_Window *J 	= novaJanela();
 	SDL_Renderer *R	=	novoRender(J);
 
+	SDL_Texture *bitmap = SDL_CreateTextureFromSurface(R, SDL_LoadBMP("assets/Icon.1_24.bmp"));
+
 	// limpa a tela e aguarda
 	limpaTela(R);
+
+	SDL_RenderCopy(R, bitmap, NULL, NULL);
+	SDL_RenderPresent(R);
+
 	SDL_Delay(5000);
 
 	SDL_DestroyRenderer(R);
@@ -56,7 +62,7 @@ void limpaTela(SDL_Renderer* R, SDL_Color cor) {
 
 
 
-
+// https://opengameart.org/
 // http://wiki.libsdl.org/SDL_CreateRenderer
 // https://dotnettutorials.net/lesson/references/
 // https://www.programiz.com/cpp-programming/default-argument
