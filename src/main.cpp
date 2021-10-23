@@ -42,6 +42,10 @@ int main() {
 			}
 		}
 
+		// Lógica
+
+		// Desenhar
+
 		SDL_RenderClear(R);
 		SDL_RenderCopy(R, bitmap, NULL, NULL);
 
@@ -53,20 +57,8 @@ int main() {
 			frames -= 60;
 			deltaT60F = SDL_GetTicks();
 		}
-//
-//		Uint32 fimT = (SDL_GetTicks()-inicioT);
-//		float delay = 50/3 - fimT;
-//		if (delay < 0) delay = 0;
-//		SDL_Delay(delay);
-//		inicioT = SDL_GetTicks();
-
-//		controleFPS(inicioT);
-
 		FC_Draw(fonte, R, 0, 0, "FPS: %.2f, Delay: %.2f", FPS, controleFPS(inicioT));
 		SDL_RenderPresent(R);
-
-		SDL_Delay(14);
-
 	}
 
 	SDL_DestroyRenderer(R);
