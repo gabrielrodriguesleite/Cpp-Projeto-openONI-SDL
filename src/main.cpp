@@ -25,7 +25,16 @@ int main() {
 	SDL_RenderCopy(R, bitmap, NULL, NULL);
 	SDL_RenderPresent(R);
 
-	SDL_Delay(5000);
+//	SDL_Delay(5000);
+	SDL_bool rodar = SDL_TRUE;
+	while(rodar) {
+		SDL_Event E;
+		while(SDL_PollEvent(&E)){
+			switch(E.type) {
+				case SDL_QUIT: rodar = SDL_FALSE; break;
+			}
+		}
+	}
 
 	SDL_DestroyRenderer(R);
 	SDL_DestroyWindow(J);
