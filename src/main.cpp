@@ -24,25 +24,36 @@ int main() {
 	FC_LoadFont(fonte, R, "assets/Mini Story.ttf", 20,
 		FC_MakeColor(255, 0, 0, 255), TTF_STYLE_NORMAL);
 
-	Uint8 FPS = 123;
+	int dFPS = 60;
+	int dDelta = 1000/dFPS; // desired time b/w frames
 
 	SDL_Event E;
 	SDL_bool rodar = SDL_TRUE;
 	while(rodar) {
-
-		SDL_RenderClear(R);
-		SDL_RenderCopy(R, bitmap, NULL, NULL);
-
-		FC_Draw(fonte, R, 0, 0, "FPS: %d", FPS);
-
-		SDL_RenderPresent(R);
-		SDL_Delay(1000/60);
+		int starttick = SDL_GetTicks();
 
 		while(SDL_PollEvent(&E)){
 			switch(E.type) {
 				case SDL_QUIT: rodar = SDL_FALSE; break;
 			}
 		}
+
+		SDL_RenderClear(R);
+		SDL_RenderCopy(R, bitmap, NULL, NULL);
+
+		int delta = SDL_GetTicks() - starttick;
+		int FPS = 1000/(dDelta - delta);
+		FC_Draw(fonte, R, 0, 0, "FPS: %d", FPS);
+
+		SDL_RenderPresent(R);
+
+		if (delta < dDelta) SDL_Delay(dDelta - delta);
+
+//		fpsDelay = ;
+//		SDL_Delay(fpsDelay);
+		//SDL_Delay(50/3); //1000/60
+
+
 	}
 
 	SDL_DestroyRenderer(R);
@@ -84,6 +95,8 @@ void limpaTela(SDL_Renderer* R, SDL_Color cor) {
 // http://wiki.libsdl.org/SDL_CreateRenderer
 // https://dotnettutorials.net/lesson/references/
 // https://www.programiz.com/cpp-programming/default-argument
+// https://klebermota.eti.br/2017/06/10/tutorial-de-sdl-parte-25-definindo-o-frame-rate-manualmente/
+
 
 
 
