@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 // http://wiki.libsdl.org/CategoryAPI
 
+#include "SDL_FontCache.h"
+
 void iniciaSDL();
 SDL_Window* novaJanela();
 SDL_Renderer* novoRender(SDL_Window* janela);
@@ -18,16 +20,21 @@ int main() {
 	SDL_Renderer *R	=	novoRender(J);
 
 	SDL_Texture *bitmap = SDL_CreateTextureFromSurface(R, SDL_LoadBMP("assets/Icon.1_24.bmp"));
+	FC_Font* fonte = FC_CreateFont();
+	FC_LoadFont(fonte, R, "assets/Mini Story.ttf", 20,
+		FC_MakeColor(255, 0, 0, 255), TTF_STYLE_NORMAL);
 
-	//	limpa a tela e aguarda
+	Uint8 FPS = 123;
 
-	//	SDL_Delay(5000);
 	SDL_Event E;
 	SDL_bool rodar = SDL_TRUE;
 	while(rodar) {
 
 		SDL_RenderClear(R);
 		SDL_RenderCopy(R, bitmap, NULL, NULL);
+
+		FC_Draw(fonte, R, 0, 0, "FPS: %d", FPS);
+
 		SDL_RenderPresent(R);
 		SDL_Delay(1000/60);
 
