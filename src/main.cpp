@@ -50,6 +50,8 @@ int main() {
 
 	SDL_Rect Projecao;
 
+
+
 	// main loop
 	SDL_bool rodar = SDL_TRUE;
 	while(rodar) {
@@ -73,8 +75,9 @@ int main() {
 		// Lógica
 
 		// Desenhar
-		Projecao.x = 0;
-		Projecao.y = 0;
+		SDL_GetWindowSize(J, &Projecao.x, &Projecao.y);
+		Projecao.x = Projecao.x / 2 - TextureRect.w / 2 * nivelZoom;
+		Projecao.y = Projecao.y / 2 - TextureRect.h / 2 * nivelZoom;
 		Projecao.w = TextureRect.w * nivelZoom;
 		Projecao.h = TextureRect.h * nivelZoom;
 
