@@ -20,20 +20,33 @@ int main() {
 	SDL_Window *J 	= novaJanela();
 	SDL_Renderer *R	=	novoRender(J);
 
-	SDL_Texture *bitmap = SDL_CreateTextureFromSurface(R, SDL_LoadBMP("assets/Icon.1_24.bmp"));
-	FC_Font* fonte = FC_CreateFont();
-	FC_LoadFont(fonte, R, "assets/Mini Story.ttf", 20,
-		FC_MakeColor(255, 0, 0, 255), TTF_STYLE_NORMAL);
-
-	SDL_Event E;
-	SDL_bool rodar = SDL_TRUE;
-
+	// FPS display
 	Uint32 frames = 0;
 	Uint32 deltaT60F = SDL_GetTicks();
 	float FPS = 60;
 
+	// FPS control
 	Uint32 inicioT = SDL_GetTicks();
 
+	// assets management
+	// configs
+
+	// textures
+	SDL_Texture *bitmap = SDL_CreateTextureFromSurface(R, SDL_LoadBMP("assets/Icon.1_24.bmp"));
+	// fonts
+	FC_Font* fonte = FC_CreateFont();
+	FC_LoadFont(fonte, R, "assets/Mini Story.ttf", 20,
+		FC_MakeColor(255, 0, 0, 255), TTF_STYLE_NORMAL);
+
+	// sounds
+
+
+	// saves
+
+
+	// main loop
+	SDL_Event E;
+	SDL_bool rodar = SDL_TRUE;
 	while(rodar) {
 
 		while(SDL_PollEvent(&E)){
@@ -106,9 +119,11 @@ float controleFPS(Uint32& inicioT) {
 
 // https://opengameart.org/
 // http://wiki.libsdl.org/SDL_CreateRenderer
+// https://thenumbat.github.io/cpp-course/index.html
 // https://dotnettutorials.net/lesson/references/
 // https://www.programiz.com/cpp-programming/default-argument
 // https://klebermota.eti.br/2017/06/10/tutorial-de-sdl-parte-25-definindo-o-frame-rate-manualmente/
+// https://thenumbat.github.io/cpp-course/sdl2/08/08.html // fps vsync perf physics & animation times
 
 
 
