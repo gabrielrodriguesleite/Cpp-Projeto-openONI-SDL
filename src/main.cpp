@@ -40,27 +40,46 @@ int main() {
 
 	// sounds
 
-
 	// saves
 
+	// visualizador imagens
+	float nivelZoom = 1.0;
+	
+	SDL_Rect TextureRect;
+	SDL_QueryTexture(bitmap, NULL, NULL, &TextureRect.w, &TextureRect.h);
+
+	SDL_Rect Projecao;
 
 	// main loop
-	SDL_Event E;
 	SDL_bool rodar = SDL_TRUE;
 	while(rodar) {
+		SDL_Event E;
 
 		while(SDL_PollEvent(&E)){
 			switch(E.type) {
 				case SDL_QUIT: rodar = SDL_FALSE; break;
+				case SDL_MOUSEWHEEL:
+					if(E.wheel.y > 0) {
+						// SDL_Log("mouse UP");
+						nivelZoom += .1f * nivelZoom;
+					} else if(E.wheel.y < 0) {
+						// SDL_Log("mouse DOWN");
+						nivelZoom -= .1f * nivelZoom;
+					}
+					break;
 			}
 		}
 
 		// Lógica
 
 		// Desenhar
+		Projecao.x = 0;
+		Projecao.y = 0;
+		Projecao.w = TextureRect.w * nivelZoom;
+		Projecao.h = TextureRect.h * nivelZoom;
 
 		SDL_RenderClear(R);
-		SDL_RenderCopy(R, bitmap, NULL, NULL);
+		SDL_RenderCopy(R, bitmap, NULL, &Projecao);
 
 		// display FPS
 		frames++;
@@ -124,6 +143,7 @@ float controleFPS(Uint32& inicioT) {
 // https://www.programiz.com/cpp-programming/default-argument
 // https://klebermota.eti.br/2017/06/10/tutorial-de-sdl-parte-25-definindo-o-frame-rate-manualmente/
 // https://thenumbat.github.io/cpp-course/sdl2/08/08.html // fps vsync perf physics & animation times
+// https://linux.m2osw.com/creating-new-git-repository
 
 
 
