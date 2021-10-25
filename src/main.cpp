@@ -1,6 +1,6 @@
 #include <stdio.h> // printf
 
-// ↓ deve ser movido para outro arquivo
+// ↓ deve ser movido para outro arquivo	 
 #include <SDL2/SDL.h>
 // http://wiki.libsdl.org/CategoryAPI
 
@@ -12,9 +12,9 @@ SDL_Renderer* novoRender(SDL_Window* janela);
 void limpaTela(SDL_Renderer* R, SDL_Color = SDL_Color{128, 128, 128, 255});
 float controleFPS(Uint32& inicioT);
 
-int main() {
+int main(int argc, char const *argv[]) {
 	printf("Olá mundo!\n");
-	SDL_Log("Olá SDL2");
+	SDL_Log("Olá SDL2.\n argc: %d, argv: %s", argc, argv[argc-1] );
 
 	iniciaSDL();
 	SDL_Window *J 	= novaJanela();
@@ -60,16 +60,11 @@ int main() {
 			switch(E.type) {
 				case SDL_QUIT: rodar = SDL_FALSE; break;
 				case SDL_MOUSEWHEEL:
-					if(E.wheel.y > 0) {
-						// SDL_Log("mouse UP");
-						nivelZoom += .1f * nivelZoom;
-					} else if(E.wheel.y < 0) {
-						// SDL_Log("mouse DOWN");
-						nivelZoom -= .1f * nivelZoom;
-					}
+					if(E.wheel.y > 0) nivelZoom += .1f * nivelZoom;
+					else if(E.wheel.y < 0) nivelZoom -= .1f * nivelZoom;
 					break;
 				case SDL_KEYDOWN:
-					switch( E.key.keysym.sym ) {
+					switch(E.key.keysym.sym) {
 						case SDLK_UP:			projPos.y -= .1 * projecao.h; break;
 						case SDLK_DOWN:		projPos.y += .1 * projecao.h; break;
 						case SDLK_LEFT:		projPos.x -= .1 * projecao.w; break;
