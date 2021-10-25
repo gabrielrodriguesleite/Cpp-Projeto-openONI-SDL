@@ -45,12 +45,11 @@ int main() {
 	// visualizador imagens
 	float nivelZoom = 1.0;
 	
-	SDL_Rect TextureRect;
-	SDL_QueryTexture(bitmap, NULL, NULL, &TextureRect.w, &TextureRect.h);
+	SDL_Rect textureRect;
+	SDL_QueryTexture(bitmap, NULL, NULL, &textureRect.w, &textureRect.h);
 
-	SDL_Rect Projecao;
-
-
+	SDL_Rect projecao;
+	SDL_Point projPos = {0, 0};
 
 	// main loop
 	SDL_bool rodar = SDL_TRUE;
@@ -69,20 +68,27 @@ int main() {
 						nivelZoom -= .1f * nivelZoom;
 					}
 					break;
+				case SDL_KEYDOWN:
+					switch( E.key.keysym.sym ) {
+						case SDLK_UP:			projPos.y -= .1 * projecao.h; break;
+						case SDLK_DOWN:		projPos.y += .1 * projecao.h; break;
+						case SDLK_LEFT:		projPos.x -= .1 * projecao.w; break;
+						case SDLK_RIGHT:	projPos.x += .1 * projecao.w; break;
+					}
 			}
 		}
 
 		// Lógica
 
 		// Desenhar
-		SDL_GetWindowSize(J, &Projecao.x, &Projecao.y);
-		Projecao.x = Projecao.x / 2 - TextureRect.w / 2 * nivelZoom;
-		Projecao.y = Projecao.y / 2 - TextureRect.h / 2 * nivelZoom;
-		Projecao.w = TextureRect.w * nivelZoom;
-		Projecao.h = TextureRect.h * nivelZoom;
+		SDL_GetWindowSize(J, &projecao.x, &projecao.y);
+		projecao.x = projecao.x / 2  - textureRect.w / 2 * nivelZoom + projPos.x;
+		projecao.y = projecao.y / 2  - textureRect.h / 2 * nivelZoom + projPos.y;
+		projecao.w = textureRect.w * nivelZoom;
+		projecao.h = textureRect.h * nivelZoom;
 
 		SDL_RenderClear(R);
-		SDL_RenderCopy(R, bitmap, NULL, &Projecao);
+		SDL_RenderCopy(R, bitmap, NULL, &projecao);
 
 		// display FPS
 		frames++;
