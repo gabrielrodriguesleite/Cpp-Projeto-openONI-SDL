@@ -137,7 +137,9 @@ float controleFPS(Uint32& inicioT) {
 		return delay;
 }
 
-
+// TRANSFORMAR O FPS EM CLASSE:
+// O metodo update é chamado cada vez que desenha a tela - ele atualiza os valores e devolve o delay necessario
+// O metodo get devolve o valor do FPS calculado
 
 
 // https://opengameart.org/
