@@ -5,13 +5,13 @@ BINARIO			= bin/linux/openONI
 COMPILADOR	= g++
 COMP_OP			= -w -no-pie
 LINK_OP			= -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer -lSDL2_gfx
-
 app: $(FONTES)
 	mkdir -p bin/linux/
 	clear
 	$(COMPILADOR) $(FONTES) $(COMP_OP) $(LINK_OP) -o $(BINARIO)
 	du -h $(BINARIO)
 	./$(BINARIO)
+
 
 # fim do MAKEFILE
 
