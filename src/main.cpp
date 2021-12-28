@@ -6,6 +6,66 @@
 
 #include "SDL_FontCache.h"
 
+// TRANSFORMAR O FPS EM CLASSE:
+// O metodo update é chamado cada vez que desenha a tela - ele atualiza os valores e devolve o delay necessario
+// O metodo get devolve o valor do FPS calculado
+class FPS
+{
+private:
+	/* data */
+	float fps_calculado;
+	int fps_desejado;
+	int frames;
+	Uint32 tick_antigo;
+	Uint32 ticks_60f;
+public:
+	FPS(Uint32, int);
+	~FPS();
+	float update(Uint32);
+	float get();
+};
+
+FPS::FPS(Uint32 tick, int _fps_desejado) {
+	fps_calculado = 60.0;
+	frames = 0;
+	tick_antigo = tick;
+	fps_desejado = _fps_desejado;
+	ticks_60f = 0;
+}
+
+FPS::~FPS()
+{
+}
+
+float FPS::update(Uint32 tick_atual) {
+	// essa função devolve o delay que deve haver até que este quadro seja desenhado
+	// deve ficar antes de desenhar o quadro mas logo após a execução da lógica
+
+	// 1000 / 60 = tempo de 1 frame em ms para um fps de 60
+	// if (frames % 60) { SDL_Log("1 frame = %dms" , tick_atual - tick_antigo); }
+	float delay_d = 1000.0 / fps_desejado;
+	int delay_m = tick_atual - tick_antigo;
+
+	++frames;
+	if( frames >= fps_desejado) { // atualiza ~ 1 / seg
+		frames -= fps_desejado;
+		fps_calculado = 1000.0 / delay_m; // quantas vezes o frame atual cabe em 1s
+	}
+	
+	tick_antigo = tick_atual;
+	float delay = delay_d;
+	// demorou demais
+	if ( delay_m > delay_d ) {
+		delay = delay_d - (delay_m - delay_d);
+		if (delay < 0){ return 1.0; }
+	}
+	return delay;
+}
+
+float FPS::get() { return fps_calculado; }
+
+// --- FIM DA CLASSE FPS ---
+
 void iniciaSDL();
 SDL_Window* novaJanela();
 SDL_Renderer* novoRender(SDL_Window* janela);
@@ -23,10 +83,13 @@ int main(int argc, char const *argv[]) {
 	// FPS display
 	Uint32 frames = 0;
 	Uint32 deltaT60F = SDL_GetTicks();
-	float FPS = 60;
+	float FPSv = 60;
 
 	// FPS control
 	Uint32 inicioT = SDL_GetTicks();
+
+	// FPS CLASSE:
+	FPS fps(SDL_GetTicks(), 60);
 
 	// assets management
 	// configs
@@ -75,10 +138,14 @@ int main(int argc, char const *argv[]) {
 
 		// Lógica
 
+		// Controle FPS
+		// atualiza contagem de frames
+		SDL_Delay(fps.update(SDL_GetTicks()));
+
 		// Desenhar
 		SDL_GetWindowSize(J, &projecao.x, &projecao.y);
-		projecao.x = projecao.x / 2  - textureRect.w / 2 * nivelZoom + projPos.x;
-		projecao.y = projecao.y / 2  - textureRect.h / 2 * nivelZoom + projPos.y;
+		projecao.x = projecao.x / 2 - textureRect.w / 2 * nivelZoom + projPos.x;
+		projecao.y = projecao.y / 2 - textureRect.h / 2 * nivelZoom + projPos.y;
 		projecao.w = textureRect.w * nivelZoom;
 		projecao.h = textureRect.h * nivelZoom;
 
@@ -89,11 +156,12 @@ int main(int argc, char const *argv[]) {
 		frames++;
 		if (frames >= 60) {
 			Uint32 tempoTotalMS = SDL_GetTicks() - deltaT60F;
-			FPS = 60000.0f / tempoTotalMS;
+			FPSv = 60000.0f / tempoTotalMS;
 			frames -= 60;
 			deltaT60F = SDL_GetTicks();
 		}
-		FC_Draw(fonte, R, 0, 0, "FPS: %.2f, Delay: %.2f", FPS, controleFPS(inicioT));
+		// FC_Draw(fonte, R, 0, 0, "FPS: %.2f, Delay: %.2f", FPSv, controleFPS(inicioT));
+		FC_Draw(fonte, R, 0, 0, "FPS: %.2f", fps.get());
 		SDL_RenderPresent(R);
 	}
 
@@ -136,11 +204,6 @@ float controleFPS(Uint32& inicioT) {
 		inicioT = SDL_GetTicks();
 		return delay;
 }
-
-// TRANSFORMAR O FPS EM CLASSE:
-// O metodo update é chamado cada vez que desenha a tela - ele atualiza os valores e devolve o delay necessario
-// O metodo get devolve o valor do FPS calculado
-
 
 // https://opengameart.org/
 // http://wiki.libsdl.org/SDL_CreateRenderer
