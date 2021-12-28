@@ -14,7 +14,7 @@ float controleFPS(Uint32& inicioT);
 
 int main(int argc, char const *argv[]) {
 	printf("Olá mundo!\n");
-	SDL_Log("Olá SDL2.\n argc: %d, argv: %s", argc, argv[argc-1] );
+	SDL_Log("Olá SDL2.\n argc: %d, argv: %s", argc, argv[argc-1] ); // para ser usado quando tentar abrir arquivo pela linha de programa
 
 	iniciaSDL();
 	SDL_Window *J 	= novaJanela();
@@ -149,6 +149,7 @@ float controleFPS(Uint32& inicioT) {
 // https://thenumbat.github.io/cpp-course/sdl2/08/08.html // fps vsync perf physics & animation times
 // https://linux.m2osw.com/creating-new-git-repository
 
+// https://wiki.libsdl.org/SDL_atomic_t // fps de verdade
 
 
 
